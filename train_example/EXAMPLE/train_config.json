@@ -1,6 +1,6 @@
 {
     "dataset": {
-        "repo_id": "tiangong/bread_place_03_27_test",
+        "repo_id": "REPO_ID",
         "episodes": null,
         "image_transforms": {
             "enable": false,
@@ -116,8 +116,8 @@
         "optimizer_weight_decay": 0.0001,
         "optimizer_lr_backbone": 1e-05
     },
-    "output_dir": "/media/neil/f11e77e3-b8fa-4220-8f67-1238bac027cd/outputs/act_tiangong_place_bread_03_27_test",
-    "job_name": "job_act_tiangong_place_bread_03_27_test",
+    "output_dir": "OUTPUT_DIR",
+    "job_name": "JOB_NAME",
     "resume": false,
     "seed": 100000,
     "num_workers": 8,
