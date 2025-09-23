@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import rclpy
-from rclpy.node import Node
-from rclpy.executors import MultiThreadedExecutor
-import cv2
-from typing import Tuple
 import time
+from typing import Tuple
+
 import numpy as np
+import rclpy
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image, JointState
+from rclpy.executors import MultiThreadedExecutor
+from rclpy.node import Node
+from ros2_stark_interfaces.msg import MotorStatus, SetMotorMulti
+from sensor_msgs.msg import Image
 from std_msgs.msg import Header
-from ros2_stark_interfaces.msg import SetMotorMulti, MotorStatus
-import pickle
-import os
-import h5py
+
 # Import message types
 try:
     from bodyctrl_msgs.msg import CmdSetMotorPosition, MotorStatusMsg, SetMotorPosition
@@ -28,9 +25,8 @@ except ImportError:
     print("Warning: bodyctrl_msgs package is not available, will use String message type as replacement")
 
 # Use message_filters for message synchronization
-from message_filters import ApproximateTimeSynchronizer, Subscriber
-
 from action_policy import PolicyAgent
+from message_filters import ApproximateTimeSynchronizer, Subscriber
 
 
 class PolicyAgentNode(Node):
@@ -207,13 +203,13 @@ class PolicyAgentNode(Node):
         current_status = self.get_current_arm_status()
         step_array = np.linspace(current_status, target_joint, fine_step)
         
-        self.get_logger().info(f'Start moving robotic arm to target position')
+        self.get_logger().info('Start moving robotic arm to target position')
         for stp in step_array:
             self.dual_arm_controller.publish(self._construct_dual_arm_ctrl_msg(stp))
             # Use Python's time.sleep instead of ROS1's rate.sleep
             time.sleep(1.0/400.0)  # Equivalent to 400Hz frequency
         
-        self.get_logger().info(f'Robotic arm has reached target position')
+        self.get_logger().info('Robotic arm has reached target position')
         return True
     
     # def control_hand(self, hand_type, position):
@@ -355,9 +351,6 @@ class PolicyAgentNode(Node):
         self.get_logger().info("Starting main loop")
     
         print("Starting main loop")
-        # Test flag for controlling hand open/close
-        test_open = True
-        test_counter = 0
 
 
         while rclpy.ok():
