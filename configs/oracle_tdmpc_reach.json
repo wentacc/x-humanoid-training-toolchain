@@ -1,0 +1,40 @@
+{
+  "dataset": {
+    "repo_id": "outputs/expert_data/oracle_reach_v3_100",
+    "type": "metaworld",
+    "delta_timestamps": {
+      "observation.state": [0],
+      "observation.environment_state": [0],
+      "action": [0, 1]
+    }
+  },
+  "policy": {
+    "type": "tdmpc",
+    "horizon": 5,
+    "n_action_repeats": 2,
+    "num_inference_steps": 5,
+    "lr": 3e-4,
+    "weight_decay": 0.0,
+    "use_scheduler": true
+  },
+  "training": {
+    "offline_steps": 10000,
+    "online_rollout_n_episodes": 0,
+    "num_workers": 4,
+    "batch_size": 256,
+    "eval_freq": 1000,
+    "save_freq": 5000,
+    "log_freq": 100
+  },
+  "env": {
+    "type": "metaworld",
+    "task": "reach-v3",
+    "episode_length": 200,
+    "obs_type": "state"
+  },
+  "wandb": {
+    "enable": false,
+    "project": "lerobot_oracle",
+    "notes": "TD-MPC trained on Oracle reach-v3 data"
+  }
+}
